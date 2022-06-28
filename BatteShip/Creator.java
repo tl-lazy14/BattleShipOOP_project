@@ -170,6 +170,7 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 MainMenu menu = new MainMenu(1120, 690, isPlaySound);
+                clip.stop();
                 frame.dispose();
             }});
         this.add(back);
