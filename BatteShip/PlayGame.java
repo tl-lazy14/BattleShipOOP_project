@@ -334,7 +334,7 @@ public class PlayGame extends JLabel implements ActionListener {
 //		JOptionPane.showMessageDialog(frame, "set ");
 //		URL url = MainMenu.class.getResource("/HighScore/highscore.txt");
 //		File file = new File(url.getPath());
-        File file = new File("D:/BattleShip-OOP/high.txt");
+        File file = new File("D:/BattleShip-OOP/highscore.txt");
         int[] A = new int[6];
         try {
             file.createNewFile();
@@ -355,7 +355,7 @@ public class PlayGame extends JLabel implements ActionListener {
         }
         String s = "" + A[5] + " " + A[4] + " " + A[3] + " " + A[2] + " " + A[1];
         try {
-            FileWriter fw = new FileWriter("D:/BattleShip-OOP/high.txt");
+            FileWriter fw = new FileWriter("D:/BattleShip-OOP/highscore.txt");
             fw.write(s);
             fw.close();
 

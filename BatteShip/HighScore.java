@@ -103,7 +103,7 @@ public class HighScore extends JLabel  {
         try {
 //			URL url = MainMenu.class.getResource("/HighScore/highscore.txt");
 //			FileWriter fw = new FileWriter(url.getPath());
-            FileWriter fw = new FileWriter("D:/BattleShip-OOP/high.txt");
+            FileWriter fw = new FileWriter("D:/BattleShip-OOP/highscore.txt");
             fw.write(s);
             fw.close();
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public class HighScore extends JLabel  {
     }
 
     private void showScore(){
-        File file = new File("D:/BattleShip-OOP/high.txt");
+        File file = new File("D:/BattleShip-OOP/highscore.txt");
 
         int[] A = new int[6];
         try {
