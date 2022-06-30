@@ -1,0 +1,19 @@
+
+ Welcome to Batteship - a game full of strategy and luck
+ Game instructions:
+
+ - Each side has a sea of 10 * 10 coordinates
+ - The player will hide 5 ships in turn. From 1 to 5 into their own 
+ waters
+ - In turn, parties will shoot into the squares of the changing
+ waters, if they are hit, they will be fired
+ - A ship is down when it is fully shot
+ - Game ends when one side is hit by an entire ship
+
+ BatteShip developed by Team:
+
+ - Dinh Duy Anh: anh.dd200013@sis.hust.edu.vn
+ - Nguyen Dac Hoang Anh: anh.ndh204510@sis.hust.edu.vn
+ - Do Vu Tung Lam: lam.dvt204574@sis.hust.edu.vn
+ - Cao Thanh Huy: huy.ct204656@sis.hust.edu.vn
+ - Nguyen Viet Toan: toan.nv200545@sis.hust.edu.vn

@@ -81,7 +81,7 @@ public class MainMenu implements ActionListener  {
         String fileContent = "";
 
         try {
-			File file = new File("D:/nhap.txt");
+			File file = new File("D:/BattleShip-OOP/gamerule.txt");
 			Scanner scan = new Scanner(file);
 			while (scan.hasNextLine()) {
 				fileContent = fileContent.concat(scan.nextLine() + "\n");

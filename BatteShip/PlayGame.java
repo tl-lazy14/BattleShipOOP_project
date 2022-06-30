@@ -285,7 +285,7 @@ public class PlayGame extends JLabel implements ActionListener {
         }
         markP[i][j] = true;
         if (computerMap.isShip[i][j]) {
-            computerMap.mapPiece[i][j].setIcon(new ImageIcon(loadImage("/img/hit.png", 56, 56)));
+            computerMap.mapPiece[i][j].setIcon(new ImageIcon(loadImage("/img/RED.png", 56, 56)));
             playerHit++;
             updateHistoryText(i,j,true);
             checkDeadOnComputerMap();
