@@ -7,27 +7,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.File;
 import java.net.URL;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
 public class MainMenu implements ActionListener  {
     private JFrame frame;
     private JLabel menu1;
+    private JLabel showRules;
     private ImageIcon menuBackground;
+    private JTextArea content;
+
     private JButton play;
     private JButton gameMode;
     private JButton gameRule;
     private JButton highScore;
     private JButton sound;
     private JButton exit;
-
-    private Creator creator;
-    private HighScore score;
 
     private Clip clip;
     private static boolean isPlaySound ;
@@ -45,58 +44,78 @@ public class MainMenu implements ActionListener  {
         menu1.setIcon(menuBackground);
 
         play = new JButton("PLAY");
-        play.setBounds(w / 2 - 130,  h / 5, 260, 50);
+        play.setBounds(w / 2 - 130,  h / 5 + 30, 260, 50);
         play.setFont(new Font("Snap ITC", Font.BOLD, 30));
         play.setBackground(Color.GREEN);
         play.setBorder(new LineBorder(Color.GREEN));
         play.setFocusable(false);
-        menu1.add(play);
+        play.setCursor(new Cursor(Cursor.HAND_CURSOR));
         play.setActionCommand("Play");
         play.addActionListener(this);
 
         gameMode = new JButton("EASY");
-        gameMode.setBounds(w / 2 - 130,  h / 5+60, 260, 50);
+        gameMode.setBounds(w / 2 - 130,  h / 5 + 90, 260, 50);
         gameMode.setFont(new Font("Snap ITC", Font.BOLD, 30));
         gameMode.setBackground(new Color(255, 102, 102));
         gameMode.setBorder(new LineBorder(new Color(255, 102, 102)));
         gameMode.setFocusable(false);
-        menu1.add(gameMode);
+        gameMode.setCursor(new Cursor(Cursor.HAND_CURSOR));
         gameMode.setActionCommand("easy");
         gameMode.addActionListener(this);
 
-        gameRule = new JButton("GAME RULE");
-        gameRule.setBounds(w / 2 - 130,  h / 5+120, 260, 50);
-        gameRule.setFont(new Font("Snap ITC", Font.BOLD, 30));
-        gameRule.setBackground(Color.YELLOW);
-        gameRule.setBorder(new LineBorder(Color.YELLOW));
-        gameRule.setFocusable(false);
-        menu1.add(gameRule);
-        gameRule.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://www.google.com/search?hl=fr&sxsrf=ALeKk03f4-0_FiE0HM0MRB2D8gbIOjgqrA%3A1597187736262&source=hp&ei=mCYzX5XhDJKblwS9_KagDA&q=How+to+use+google&oq=How+to+use+google&gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgjECc6AggAOgIILjoFCC4QywE6BggjECcQEzoHCAAQChDLAToECAAQDVDRqAFY7vEBYOH2AWgEcAB4AIAB9wKIAcsWkgEIMy4xNy4wLjGYAQCgAQGqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwiVjaD9o5TrAhWSzYUKHT2-CcQQ4dUDCAc&uact=5"));
-                } catch (URISyntaxException | IOException ex) {
+        gameRule = new JButton();
+        gameRule.setSize(60, 60);
+        gameRule.setIcon(new ImageIcon(loadImage("/img/ruleGame.png", 80, 80)));
+		gameRule.setBounds(5, 15, 60, 60);
+		gameRule.setBackground(Color.BLACK);
+		gameRule.setBorder(new LineBorder(Color.BLACK));
+        gameRule.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		gameRule.setActionCommand("rules on");
+		gameRule.addActionListener(this);
 
-                }
-            }
-        });
+        showRules = new JLabel();
+		showRules.setIcon(new ImageIcon(loadImage("/img/frameRules1.png", 600, 800)));
+		showRules.setBounds(270, -130, 600, 800);
+		showRules.setVisible(false);
+
+        String fileContent = "";
+
+        try {
+			File file = new File("D:/nhap.txt");
+			Scanner scan = new Scanner(file);
+			while (scan.hasNextLine()) {
+				fileContent = fileContent.concat(scan.nextLine() + "\n");
+			}
+			scan.close();
+		} catch (Exception e) {
+			System.out.println("File not found");
+		}
+
+        content = new JTextArea(fileContent);
+		content.setFont(new Font("Arial", Font.BOLD, 16));
+		content.setForeground(Color.YELLOW);
+		content.setBackground(Color.BLACK);
+		content.setBounds(58, 190, 490, 395);
+
+        showRules.add(content);
 
         highScore = new JButton("HIGHSCORE");
-        highScore.setBounds(w / 2 - 130,  h / 5+180, 260, 50);
+        highScore.setBounds(w / 2 - 130,  h / 5 + 150, 260, 50);
         highScore.setFont(new Font("Snap ITC", Font.BOLD, 30));
         highScore.setBackground(Color.GRAY);
         highScore.setBorder(new LineBorder(Color.GRAY));
         highScore.setFocusable(false);
+        highScore.setCursor(new Cursor(Cursor.HAND_CURSOR));
         highScore.setActionCommand("Highscore");
         highScore.addActionListener(this);
-        menu1.add(highScore);
 
         sound = new JButton();
-        sound.setBounds(w / 2 - 130,  h / 5+240, 260, 50);
+        sound.setBounds(w / 2 - 130,  h / 5 + 210, 260, 50);
         sound.setFont(new Font("Snap ITC", Font.BOLD, 30));
         sound.setBackground(Color.ORANGE);
         sound.setBorder(new LineBorder(Color.ORANGE));
         sound.setFocusable(false);
+        sound.setCursor(new Cursor(Cursor.HAND_CURSOR));
         if (isPlaySound) {
             sound.setText("SOUND OFF");
             sound.setActionCommand("sound on");
@@ -105,24 +124,29 @@ public class MainMenu implements ActionListener  {
             sound.setActionCommand("sound off");
         }
         sound.addActionListener(this);
-        menu1.add(sound);
-
 
         exit = new JButton("EXIT");
-        exit.setBounds(w / 2 - 130,  h / 5+300, 260, 50);
+        exit.setBounds(w / 2 - 130,  h / 5 + 270, 260, 50);
         exit.setFont(new Font("Snap ITC", Font.BOLD, 30));
         exit.setBackground(Color.RED);
         exit.setBorder(new LineBorder(Color.RED));
         exit.setFocusable(false);
-        menu1.add(exit);
+        exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit (0);
 
             }});
 
-        frame.add(menu1);
+        menu1.add(showRules);
+        menu1.add(play);
+        menu1.add(gameMode);
+        menu1.add(highScore);
+        menu1.add(sound);
+        menu1.add(exit);
+        menu1.add(gameRule);
 
+        frame.add(menu1);
 
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,13 +154,7 @@ public class MainMenu implements ActionListener  {
         frame.setVisible(true);
 
         playSound("/sound/sound.wav");
-        if (!isPlaySound){
-            clip.stop();
-        }
-        else {
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
+        if (!isPlaySound) clip.stop();
     }
 
     private Image loadImage(String s, int w, int h) {
@@ -197,15 +215,29 @@ public class MainMenu implements ActionListener  {
         }
 
         if ("Play".equals(e.getActionCommand())) {
-            this.clip.stop();
-            creator = new Creator(1120, 820, gameMode.getActionCommand(),isPlaySound);
-              frame.dispose();}
+            clip.stop();
+            new Creator(1120, 820, gameMode.getActionCommand(), isPlaySound);
+            frame.dispose();
+        }
 
 
         if("Highscore".equals(e.getActionCommand())){
-            score=new HighScore(1120,690);
-            frame.dispose();
+            clip.stop();
+            new HighScore(1120,690, isPlaySound);
+            menu1.setVisible(false);
+			frame.remove(menu1);
+			frame.setVisible(false);
         }
+
+        if ("rules on".equals(e.getActionCommand())) {
+			showRules.setVisible(true);
+			gameRule.setActionCommand("rules off");
+		}
+
+        if ("rules off".equals(e.getActionCommand())) {
+			showRules.setVisible(false);
+			gameRule.setActionCommand("rules on");
+		}
 
     }
 

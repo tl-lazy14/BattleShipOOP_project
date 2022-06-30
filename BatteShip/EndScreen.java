@@ -1,12 +1,19 @@
 package BatteShip;
 
 import javax.imageio.ImageIO;
+import java.net.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class EndScreen extends JLabel {
     private JFrame frame;
@@ -15,8 +22,12 @@ public class EndScreen extends JLabel {
     private JLabel Score;
     private JLabel Text;
 
-    public EndScreen(int w,int h,boolean isPlayWin,int score){
+    private Clip clip;
+    private static boolean isPlaySound;
+
+    public EndScreen(int w,int h,boolean isPlayWin,int score, boolean playSound){
         super();
+        isPlaySound = playSound;
         this.setSize(w, h);
         if(isPlayWin){
             this.setIcon(new ImageIcon(loadImage("/img/win_bg.png", w, h)));
@@ -35,33 +46,43 @@ public class EndScreen extends JLabel {
             Score.setBounds(w/2-70,h/3,200,100);
 
             this.add(Score);
+
+            playSound("/sound/winSound.wav");
+            if (!isPlaySound) clip.stop();
         }
         else{
-            this.setIcon(new ImageIcon(loadImage("/img/lost-game.jpg", w, h)));
+            this.setIcon(new ImageIcon(loadImage("/img/youLose.jpg", w, h)));
+
+            playSound("/sound/loseSound.wav");
+            if (!isPlaySound) clip.stop();
         }
 
-        highscore=new JButton("SCORE");
-        highscore.setBounds(w*3 / 5,  4*h / 5, 260, 50);
+        highscore=new JButton("Highscore");
+        highscore.setBounds(w*3 / 5+50,  4*h / 5, 260, 50);
         highscore.setFont(new Font("Snap ITC", Font.BOLD, 30));
         highscore.setBackground(Color.GREEN);
         highscore.setBorder(new LineBorder(Color.GREEN));
         highscore.setFocusable(false);
+        highscore.setCursor(new Cursor(Cursor.HAND_CURSOR));
         highscore.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new HighScore(1120,690);
+                clip.stop();
+                new HighScore(1120,690, isPlaySound);
                 frame.dispose();
             }});
         this.add(highscore);
 
         back=new JButton("Play Again");
-        back.setBounds(w / 5-50,  4*h / 5, 260, 50);
+        back.setBounds(w / 5 - 80,  4*h / 5, 260, 50);
         back.setFont(new Font("Snap ITC", Font.BOLD, 30));
-        back.setBackground(Color.GRAY);
-        back.setBorder(new LineBorder(Color.GRAY));
+        back.setBackground(Color.LIGHT_GRAY);
+        back.setBorder(new LineBorder(Color.LIGHT_GRAY));
         back.setFocusable(false);
+        back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MainMenu menu = new MainMenu(1120, 690, false);
+                clip.stop();
+                new MainMenu(1120, 690, isPlaySound);
                 frame.dispose();
             }});
         this.add(back);
@@ -89,4 +110,20 @@ public class EndScreen extends JLabel {
         return dimg;
 
     }
+
+    private void playSound(String link) {
+		try {
+			URL url = this.getClass().getResource(link);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+			clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
 }

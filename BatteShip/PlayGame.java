@@ -3,7 +3,6 @@ package BatteShip;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,9 +16,7 @@ import java.util.*;
 public class PlayGame extends JLabel implements ActionListener {
     private JFrame frame;
     private Map playerMap; // bản đồ của người chơi -> máy bắn trên này
-    private Map computerMap;
-    private JPanel panel1; // panel1 chứa 2 bản đồ
-    private JPanel panel2; // panel2 chứa thông tin chơi (turn,...)
+    private Map computerMap; // panel1 chứa 2 bản đồ// panel2 chứa thông tin chơi (turn,...)
     private JLabel historyText;
     private Clip clip;
 
@@ -81,7 +78,7 @@ public class PlayGame extends JLabel implements ActionListener {
         computerMap.setLocation(playerMap.getX()+600,playerMap.getY());
 
         historyText=new JLabel();
-        historyText.setText("<html><div style='font-size:25; color:red;text-align:center '> Player </div>");
+        historyText.setText("<html><div style='font-size:25; color:red;text-align:center'> Player </div>");
         historyText.setFont(new Font("Arial", Font.BOLD, 17));
         historyText.setVerticalAlignment(SwingConstants.CENTER);
         historyText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -133,7 +130,7 @@ public class PlayGame extends JLabel implements ActionListener {
         if(isHit) k="HIT";
         else k="MISS";
         sumTurn++;
-        historyText.setText(historyText.getText()+"<br>"+"<html>Step "+sumTurn+" : "+k+" x= "+i+"; y= "+j);
+        historyText.setText(historyText.getText()+"<br>"+"<html>Step "+sumTurn+" : "+k+" x = "+i+"; y = "+j);
     }
 
     private boolean shot(int i, int j) {
@@ -288,7 +285,7 @@ public class PlayGame extends JLabel implements ActionListener {
         }
         markP[i][j] = true;
         if (computerMap.isShip[i][j]) {
-            computerMap.mapPiece[i][j].setIcon(new ImageIcon(loadImage("/img/RED.png", 56, 56)));
+            computerMap.mapPiece[i][j].setIcon(new ImageIcon(loadImage("/img/hit.png", 56, 56)));
             playerHit++;
             updateHistoryText(i,j,true);
             checkDeadOnComputerMap();
@@ -305,9 +302,9 @@ public class PlayGame extends JLabel implements ActionListener {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+
         if (isHard)
             hitRandomHard();
         else
@@ -321,9 +318,11 @@ public class PlayGame extends JLabel implements ActionListener {
         if (isPlayerWin) {
             Score=100+sumHit-computerHit-sumTurn;
             setHighScore();
-            EndScreen end=new EndScreen(1120,690,true,Score*100);
+            clip.stop();
+            new EndScreen(1120,690,true,Score*100, isPlaySound);
         } else {
-            EndScreen end=new EndScreen(1120,690,false,0);
+            clip.stop();
+            new EndScreen(1120,690,false,0, isPlaySound);
         }
         frame.dispose();
         computerHit=0;
@@ -335,7 +334,7 @@ public class PlayGame extends JLabel implements ActionListener {
 //		JOptionPane.showMessageDialog(frame, "set ");
 //		URL url = MainMenu.class.getResource("/HighScore/highscore.txt");
 //		File file = new File(url.getPath());
-        File file = new File("D:/high.txt");
+        File file = new File("D:/BattleShip-OOP/high.txt");
         int[] A = new int[6];
         try {
             file.createNewFile();
@@ -356,7 +355,7 @@ public class PlayGame extends JLabel implements ActionListener {
         }
         String s = "" + A[5] + " " + A[4] + " " + A[3] + " " + A[2] + " " + A[1];
         try {
-            FileWriter fw = new FileWriter("D:/high.txt");
+            FileWriter fw = new FileWriter("D:/BattleShip-OOP/high.txt");
             fw.write(s);
             fw.close();
 

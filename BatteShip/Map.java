@@ -37,5 +37,4 @@ public class Map extends JPanel {
         }
     }
 
-
 }

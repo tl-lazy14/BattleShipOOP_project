@@ -55,7 +55,7 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         super();
         this.setSize(w, h);
         createBackground=new ImageIcon(loadImage("/img/creator_bg.jpg", w, h));
-       this.setIcon(createBackground);
+        this.setIcon(createBackground);
 
 
         if (gameMode == "easy")
@@ -143,6 +143,7 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         ready.setForeground(new Color(72, 209, 204));
         ready.setBorder(new LineBorder(TURQUOISE_MID_T2,2));
         ready.setOpaque(false);
+        ready.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ready.setActionCommand("ready");
         ready.addActionListener(this);
         this.add(ready);
@@ -155,6 +156,7 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         auto.setForeground(new Color(72, 209, 204));
         auto.setBorder(new LineBorder(TURQUOISE_MID_T2,2));
         auto.setOpaque(false);
+        auto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         auto.setActionCommand("random");
         auto.addActionListener(this);
         this.add(auto);
@@ -164,12 +166,13 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         back.setFont(new Font("Snap ITC", Font.TRUETYPE_FONT, 30));
         back.setBackground(Color.GREEN);
         back.setFocusable(false);
+        back.setCursor(new Cursor(Cursor.HAND_CURSOR));
         back.setForeground(new Color(72, 209, 204));
         back.setBorder(new LineBorder(TURQUOISE_MID_T2,2));
         back.setOpaque(false);
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MainMenu menu = new MainMenu(1120, 690, isPlaySound);
+                new MainMenu(1120, 690, isPlaySound);
                 clip.stop();
                 frame.dispose();
             }});
@@ -187,7 +190,7 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
         ship[2].setLocation(shipContainer.getX()+150,shipContainer.getY()+65);
         ship[3].setLocation(shipContainer.getX()+100,shipContainer.getY()+125);
         ship[4].setLocation(shipContainer.getX()+45,shipContainer.getY()+185);
-        ship[5].setLocation(shipContainer.getX(),shipContainer.getY()+245);
+        ship[5].setLocation(shipContainer.getX()+5,shipContainer.getY()+245);
        for(int i=1;i<=5;i++){
            this.add(ship[i]);
        }
@@ -404,7 +407,6 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -468,7 +470,6 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
         X = e.getX();
         Y = e.getY();
         xStart = e.getComponent().getX();
@@ -501,25 +502,23 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
                 put(tmp, xNew, yNew, i + 1, j + 1,isNgang[tmp]);
             }
 
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
+
     }
 
     public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            if ("random".equals(e.getActionCommand())) {
-                setRandom(true);
-            }
+        if ("random".equals(e.getActionCommand())) {
+            setRandom(true);
+        }
+
         if ("ready".equals(e.getActionCommand())){
             isNgangPlayer=new boolean[6];
             isNgangComputer=new boolean[6];
@@ -560,7 +559,8 @@ public class Creator extends JLabel implements MouseListener, MouseMotionListene
     }
 
     public void goToPlay() {
-        new PlayGame(1220, 820, playerMap, computerMap, isHard, A, B, isNgangPlayer,isNgangComputer,isPlaySound );
+        clip.stop();
+        new PlayGame(1220, 820, playerMap, computerMap, isHard, A, B, isNgangPlayer,isNgangComputer,isPlaySound);
         frame.dispose();
     }
 
